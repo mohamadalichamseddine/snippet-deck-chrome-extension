@@ -3,9 +3,11 @@ const STORAGE_KEY = "snippetdeck_blocks";
 /** @type {{id: string, title: string, content: string}[]} */
 let blocks = [];
 let editingId = null; // null = creating a new card
+let searchQuery = "";
 
 const els = {
   list: document.getElementById("cardList"),
+  search: document.getElementById("searchInput"),
   newBtn: document.getElementById("newCardBtn"),
   overlay: document.getElementById("editorOverlay"),
   heading: document.getElementById("editorHeading"),
@@ -23,6 +25,11 @@ init();
 async function init() {
   blocks = await loadBlocks();
   render();
+
+  els.search.addEventListener("input", () => {
+    searchQuery = els.search.value.trim().toLowerCase();
+    render();
+  });
 
   els.newBtn.addEventListener("click", () => openEditor(null));
   els.cancelBtn.addEventListener("click", closeEditor);
@@ -55,9 +62,22 @@ function persist() {
 // ---------- rendering ----------
 
 function render() {
+  const filtered = searchQuery
+    ? blocks.filter((b) => b.title.toLowerCase().includes(searchQuery))
+    : blocks;
+
   els.list.innerHTML = "";
 
-  for (const block of blocks) {
+  if (searchQuery && filtered.length === 0) {
+    const msg = document.createElement("p");
+    msg.className = "empty-body";
+    msg.style.padding = "12px 2px";
+    msg.textContent = `No cards match "${els.search.value.trim()}".`;
+    els.list.appendChild(msg);
+    return;
+  }
+
+  for (const block of filtered) {
     els.list.appendChild(renderCard(block));
   }
 }
