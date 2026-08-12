@@ -13,9 +13,50 @@
       <span class="brand-mark" aria-hidden="true"></span>
       <h1>Snippet Deck</h1>
     </div>
+    <button id="newCardBtn" class="btn btn-primary" type="button">
+      <span class="plus" aria-hidden="true">+</span> New card
+    </button>
   </header>
 
   <main id="cardList" class="card-list" aria-live="polite"></main>
+
+  <!-- Editor: shown for both "new" and "edit" -->
+  <div id="editorOverlay" class="editor-overlay" hidden>
+    <div class="editor" role="dialog" aria-modal="true" aria-labelledby="editorHeading">
+      <div class="editor-head">
+        <span id="editorHeading" class="editor-heading">New card</span>
+        <button id="editorClose" class="icon-btn" type="button" aria-label="Close">✕</button>
+      </div>
+
+      <label class="field">
+        <span class="field-label">Title</span>
+        <input
+          id="editorTitle"
+          type="text"
+          placeholder="e.g. Professional summary"
+          maxlength="60"
+          autocomplete="off"
+        />
+      </label>
+
+      <label class="field field-grow">
+        <span class="field-label">Content</span>
+        <textarea
+          id="editorContent"
+          placeholder="Paste or type the text you want to reuse…"
+          spellcheck="true"
+        ></textarea>
+      </label>
+
+      <div class="editor-actions">
+        <button id="deleteBtn" class="btn btn-danger" type="button" hidden>Delete</button>
+        <div class="editor-actions-right">
+          <button id="cancelBtn" class="btn btn-ghost" type="button">Cancel</button>
+          <button id="saveBtn" class="btn btn-primary" type="button">Save card</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="sidepanel.js"></script>
 </body>

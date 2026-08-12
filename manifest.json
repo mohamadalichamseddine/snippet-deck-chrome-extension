@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Snippet Deck — Application Text Blocks",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Save reusable text snippets and copy them with one click while filling out job application forms.",
   "permissions": ["storage", "sidePanel"],
   "action": {
