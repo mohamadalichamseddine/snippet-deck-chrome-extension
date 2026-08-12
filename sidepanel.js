@@ -15,6 +15,7 @@ const els = {
   cancelBtn: document.getElementById("cancelBtn"),
   closeBtn: document.getElementById("editorClose"),
   deleteBtn: document.getElementById("deleteBtn"),
+  toast: document.getElementById("toast"),
 };
 
 init();
@@ -106,7 +107,7 @@ function renderCard(block) {
   row.appendChild(actions);
   card.appendChild(row);
 
-  const activate = () => copyBlock(block);
+  const activate = () => copyBlock(block, card);
   card.addEventListener("click", activate);
   card.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -120,8 +121,31 @@ function renderCard(block) {
 
 // ---------- copy ----------
 
-async function copyBlock(block) {
-  await navigator.clipboard.writeText(block.content);
+async function copyBlock(block, cardEl) {
+  try {
+    await navigator.clipboard.writeText(block.content);
+  } catch (err) {
+    showToast("Couldn't copy — try again");
+    return;
+  }
+  cardEl.classList.remove("stamped");
+  // restart animation if clicked again quickly
+  void cardEl.offsetWidth;
+  cardEl.classList.add("stamped");
+  showToast(`Copied "${block.title}"`);
+}
+
+function showToast(message) {
+  els.toast.textContent = message;
+  els.toast.hidden = false;
+  // restart animation
+  els.toast.style.animation = "none";
+  void els.toast.offsetWidth;
+  els.toast.style.animation = "";
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => {
+    els.toast.hidden = true;
+  }, 1600);
 }
 
 // ---------- editor ----------
@@ -149,7 +173,7 @@ function saveEditor() {
   const content = els.content.value.trim();
 
   if (!title || !content) {
-    (title ? els.content : els.title).focus();
+    showToast("A card needs both a title and content");
     return;
   }
 
