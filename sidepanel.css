@@ -1,0 +1,91 @@
+:root {
+  --paper: #eef0ec;
+  --card: #ffffff;
+  --ink: #23291f;
+  --ink-soft: #5b6358;
+  --ink-faint: #8b9284;
+  --accent: #3d6b5c;
+  --accent-dark: #2a4e42;
+  --accent-wash: #e3ebe6;
+  --hairline: #d8dcd3;
+  --radius: 10px;
+
+  --font-label: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono",
+    Menlo, Consolas, monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Topbar ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 14px 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brand-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--accent);
+  position: relative;
+  flex: none;
+}
+.brand-mark::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--paper);
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.brand h1 {
+  font-family: var(--font-label);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ---------- Card list ---------- */
+
+.card-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
