@@ -98,6 +98,8 @@ body {
   border: 1px solid var(--hairline);
   border-radius: var(--radius);
   padding: 10px 12px;
+  cursor: pointer;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, border-color 0.08s ease;
   overflow: hidden;
 }
 
@@ -112,6 +114,21 @@ body {
   background: linear-gradient(135deg, transparent 50%, var(--paper) 50%);
   border-bottom: 1px solid var(--hairline);
   border-left: 1px solid var(--hairline);
+}
+
+.card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 1px 0 var(--hairline);
+}
+
+.card:active {
+  transform: scale(0.985);
+}
+
+.card:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
 }
 
 .card-row {

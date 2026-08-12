@@ -64,6 +64,9 @@ function render() {
 function renderCard(block) {
   const card = document.createElement("div");
   card.className = "card";
+  card.tabIndex = 0;
+  card.setAttribute("role", "button");
+  card.setAttribute("aria-label", `Copy card: ${block.title}`);
   card.dataset.id = block.id;
 
   const row = document.createElement("div");
@@ -92,7 +95,10 @@ function renderCard(block) {
   editBtn.type = "button";
   editBtn.setAttribute("aria-label", `Edit ${block.title}`);
   editBtn.textContent = "✎";
-  editBtn.addEventListener("click", () => openEditor(block.id));
+  editBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openEditor(block.id);
+  });
 
   actions.appendChild(editBtn);
 
@@ -100,7 +106,22 @@ function renderCard(block) {
   row.appendChild(actions);
   card.appendChild(row);
 
+  const activate = () => copyBlock(block);
+  card.addEventListener("click", activate);
+  card.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      activate();
+    }
+  });
+
   return card;
+}
+
+// ---------- copy ----------
+
+async function copyBlock(block) {
+  await navigator.clipboard.writeText(block.content);
 }
 
 // ---------- editor ----------
