@@ -81,6 +81,33 @@ body {
   color: var(--ink);
 }
 
+/* ---------- Search ---------- */
+
+.search-row {
+  padding: 0 14px 10px;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  background: var(--card);
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+}
+
+#searchInput:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-wash);
+}
+
+#searchInput::placeholder {
+  color: var(--ink-faint);
+}
+
 /* ---------- Card list ---------- */
 
 .card-list {
@@ -222,6 +249,13 @@ body {
     animation: none;
     transition: none;
   }
+}
+
+.empty-body {
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 16px;
 }
 
 /* ---------- Buttons ---------- */
