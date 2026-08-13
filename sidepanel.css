@@ -225,6 +225,38 @@ body {
   color: var(--accent-dark);
 }
 
+.drag-grip {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  font-size: 13px;
+  cursor: grab;
+  user-select: none;
+}
+
+.drag-grip:hover {
+  background: var(--accent-wash);
+  color: var(--accent-dark);
+}
+
+.drag-grip:active {
+  cursor: grabbing;
+}
+
+.card.dragging {
+  opacity: 0.45;
+  border-color: var(--accent);
+}
+
+/* keep the actions visible while a drag is in flight */
+.card.dragging .card-actions {
+  opacity: 1;
+}
+
 /* stamp feedback on click */
 .card.stamped::after {
   content: "✓ Copied";
