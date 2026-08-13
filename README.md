@@ -1,8 +1,10 @@
 # Snippet Deck
 
 A Chrome extension for job applications: save reusable text blocks (summary,
-"why this company", address, common short answers) and copy any of them with
-one click while filling out a form.
+role descriptions, common short answers) and copy any of them with one click
+while filling out a form.
+
+<img src="docs/screenshot.png" width="450" alt="The Snippet Deck side panel open beside a web page, listing saved cards for a professional summary, role descriptions and availability" />
 
 ## Install it (unpacked, for personal use)
 
