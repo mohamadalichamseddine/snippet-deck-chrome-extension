@@ -251,6 +251,24 @@ body {
   }
 }
 
+/* ---------- Empty state ---------- */
+
+.empty-state {
+  margin: 20px 14px;
+  padding: 22px 18px;
+  border: 1px dashed var(--hairline);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.empty-title {
+  font-family: var(--font-label);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
 .empty-body {
   color: var(--ink-soft);
   font-size: 13px;

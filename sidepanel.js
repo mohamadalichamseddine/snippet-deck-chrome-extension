@@ -7,8 +7,10 @@ let searchQuery = "";
 
 const els = {
   list: document.getElementById("cardList"),
+  empty: document.getElementById("emptyState"),
   search: document.getElementById("searchInput"),
   newBtn: document.getElementById("newCardBtn"),
+  emptyNewBtn: document.getElementById("emptyNewCardBtn"),
   overlay: document.getElementById("editorOverlay"),
   heading: document.getElementById("editorHeading"),
   title: document.getElementById("editorTitle"),
@@ -32,6 +34,7 @@ async function init() {
   });
 
   els.newBtn.addEventListener("click", () => openEditor(null));
+  els.emptyNewBtn.addEventListener("click", () => openEditor(null));
   els.cancelBtn.addEventListener("click", closeEditor);
   els.closeBtn.addEventListener("click", closeEditor);
   els.overlay.addEventListener("click", (e) => {
@@ -68,7 +71,16 @@ function render() {
 
   els.list.innerHTML = "";
 
-  if (searchQuery && filtered.length === 0) {
+  if (blocks.length === 0) {
+    els.empty.hidden = false;
+    els.list.hidden = true;
+    return;
+  }
+
+  els.empty.hidden = true;
+  els.list.hidden = false;
+
+  if (filtered.length === 0) {
     const msg = document.createElement("p");
     msg.className = "empty-body";
     msg.style.padding = "12px 2px";

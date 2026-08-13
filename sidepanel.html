@@ -30,6 +30,18 @@
 
   <main id="cardList" class="card-list" aria-live="polite"></main>
 
+  <div id="emptyState" class="empty-state" hidden>
+    <p class="empty-title">No cards yet.</p>
+    <p class="empty-body">
+      A card holds one piece of text — your summary, a "why this role"
+      answer, your address, anything you keep retyping. Add one and it's
+      one click away next time.
+    </p>
+    <button id="emptyNewCardBtn" class="btn btn-primary" type="button">
+      + Add your first card
+    </button>
+  </div>
+
   <!-- Editor: shown for both "new" and "edit" -->
   <div id="editorOverlay" class="editor-overlay" hidden>
     <div class="editor" role="dialog" aria-modal="true" aria-labelledby="editorHeading">
