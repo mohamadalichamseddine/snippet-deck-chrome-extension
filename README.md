@@ -25,6 +25,9 @@ one click while filling out a form.
   see a brief "Copied" confirmation. Click into the form field and paste
   (Ctrl/Cmd+V).
 - Hover a card and click the pencil icon to edit or delete it.
+- Hover a card and drag the grip handle to move it up or down the deck. The
+  order is saved. With a card focused you can also hold Alt and press the up
+  or down arrow.
 - Use the search box at the top to jump to a card by title once you have a
   lot of them.
 
@@ -55,5 +58,5 @@ sticks:
   cap, so it's fine for short answers but not for long attachments of text.
 - **Export/import as JSON**: a quick way to back up your cards or move them
   to another machine while sync isn't in place.
-- **Reordering / categories**: once you have 20+ cards, grouping (e.g.
-  "Contact info", "Screening answers") or drag-to-reorder would help.
+- **Categories**: once you have 20+ cards, grouping (e.g. "Contact info",
+  "Screening answers") would help on top of manual ordering.

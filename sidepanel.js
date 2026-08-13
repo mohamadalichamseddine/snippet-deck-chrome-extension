@@ -43,6 +43,17 @@ async function init() {
   els.saveBtn.addEventListener("click", saveEditor);
   els.deleteBtn.addEventListener("click", deleteEditing);
 
+  els.list.addEventListener("dragover", (e) => {
+    const dragging = els.list.querySelector(".dragging");
+    if (!dragging) return;
+    e.preventDefault();
+
+    const after = cardAfterPoint(e.clientY);
+    if (after === dragging) return;
+    if (after) els.list.insertBefore(dragging, after);
+    else els.list.appendChild(dragging);
+  });
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && !els.overlay.hidden) closeEditor();
   });
@@ -123,6 +134,24 @@ function renderCard(block) {
   const actions = document.createElement("div");
   actions.className = "card-actions";
 
+  // Only the grip starts a drag, so a stray twitch while clicking a card
+  // still copies it rather than turning into a no-op reorder.
+  if (!searchQuery) {
+    const grip = document.createElement("span");
+    grip.className = "drag-grip";
+    grip.title = "Drag to reorder";
+    grip.setAttribute("aria-hidden", "true");
+    grip.textContent = "⠿";
+    grip.addEventListener("mousedown", () => {
+      card.draggable = true;
+    });
+    grip.addEventListener("mouseup", () => {
+      card.draggable = false;
+    });
+    grip.addEventListener("click", (e) => e.stopPropagation());
+    actions.appendChild(grip);
+  }
+
   const editBtn = document.createElement("button");
   editBtn.className = "icon-btn";
   editBtn.type = "button";
@@ -139,9 +168,21 @@ function renderCard(block) {
   row.appendChild(actions);
   card.appendChild(row);
 
+  card.addEventListener("dragstart", () => card.classList.add("dragging"));
+  card.addEventListener("dragend", () => {
+    card.classList.remove("dragging");
+    card.draggable = false;
+    commitOrder();
+  });
+
   const activate = () => copyBlock(block, card);
   card.addEventListener("click", activate);
   card.addEventListener("keydown", (e) => {
+    if (e.altKey && (e.key === "ArrowUp" || e.key === "ArrowDown")) {
+      e.preventDefault();
+      moveBlock(block.id, e.key === "ArrowUp" ? -1 : 1);
+      return;
+    }
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       activate();
@@ -149,6 +190,41 @@ function renderCard(block) {
   });
 
   return card;
+}
+
+// ---------- reordering ----------
+
+/** The card the dragged one should sit before, or null to drop at the end. */
+function cardAfterPoint(y) {
+  const others = [...els.list.querySelectorAll(".card:not(.dragging)")];
+  return (
+    others.find((card) => {
+      const box = card.getBoundingClientRect();
+      return y < box.top + box.height / 2;
+    }) ?? null
+  );
+}
+
+/** Reads the order back out of the DOM after a drag and saves it. */
+function commitOrder() {
+  const order = [...els.list.querySelectorAll(".card")].map((el) => el.dataset.id);
+  blocks.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+  persist();
+}
+
+function moveBlock(id, delta) {
+  if (searchQuery) return;
+
+  const from = blocks.findIndex((b) => b.id === id);
+  const to = from + delta;
+  if (from === -1 || to < 0 || to >= blocks.length) return;
+
+  blocks.splice(to, 0, blocks.splice(from, 1)[0]);
+  persist();
+  render();
+
+  const moved = els.list.querySelector(`[data-id="${id}"]`);
+  if (moved) moved.focus();
 }
 
 // ---------- copy ----------
