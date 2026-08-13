@@ -22,6 +22,12 @@
   box-sizing: border-box;
 }
 
+/* Any author rule that sets display outranks the browser's own [hidden]
+   rule, so keep the hidden attribute authoritative wherever it is used. */
+[hidden] {
+  display: none !important;
+}
+
 html, body {
   height: 100%;
 }
